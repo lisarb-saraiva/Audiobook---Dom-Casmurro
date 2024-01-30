@@ -12,7 +12,7 @@ let capitulo = 1;
 function atualizarTempoAtual() {
   const minutos = Math.floor(audio.currentTime / 60);
   const segundos = Math.floor(audio.currentTime % 60);
-  tempoAtual.innerText = horas.toString()..padStart(2, "0" + : + minutos.toString().padStart(2, "0") + ":" + segundos.toString().padStart(2, "0");
+  tempoAtual.innerText = horas.toString().padStart(2, "0" + : + minutos.toString().padStart(2, "0") + ":" + segundos.toString().padStart(2, "0");
 }
 
 function selecionarMinuto(event) {
