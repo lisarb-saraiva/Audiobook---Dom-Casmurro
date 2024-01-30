@@ -56,21 +56,6 @@ button {
   justify-content: space-around;
 }
 
-#tempo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-#barra-progresso {
-  width: 80%;
-}
-
-#tempo-atual, #tempo-total {
-  margin-left: 0 10px;
-}
-
 #capitulo {
   text-align: center;
 }
