@@ -3,10 +3,30 @@ const audio = document.getElementById("audio-capitulo");
 const botaoPlayPause = document.getElementById("play-pause");
 const botaoProximoCapitulo = document.getElementById("proximo");
 const botaoCapituloAnterior = document.getElementById("anterior");
+const tempoAtual = document.getElementById("tempo-atual");
+
 
 const quantidadeCapitulos = 10;
 let taTocando = false;
 let capitulo = 1;
+
+
+function atualizarTempoAtual() {
+  const minutos = Math.floor(audio.currentTime / 60);
+  const segundos = Math.floor(audio.currentTime % 60);
+  tempoAtual.innerText = minutos.toString().padStart(2, "0") + ":" + segundos.toString().padStart(2, "0");
+}
+
+function selecionarMinuto(event) {
+  const larguraBarra = this.offsetWidth;
+  const clickX = event.offsetX;
+  const tempoTotal = audio.duration;
+  const minutoSelecionado = (clickX / larguraBarra) * tempoTotal / 60;
+  audio.currentTime = minutoSelecionado * 60;
+}
+audio.addEventListener("timeupdate", atualizarTempoAtual);
+document.getElementById("barra-progresso").addEventListener("click", selecionarMinuto);
+
 
 function tocarFaixa() {
   botaoPlayPause.classList.remove("bi-play-circle-fill");
