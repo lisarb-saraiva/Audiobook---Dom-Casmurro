@@ -5,6 +5,7 @@ const botaoProximoCapitulo = document.getElementById("proximo");
 const botaoCapituloAnterior = document.getElementById("anterior");
 const tempoAtual = document.getElementById("tempo-atual");
 const barraProgresso = document.getElementById("barra-progresso");
+const tempoTotal = document.getElementById("tempo-total");
 
 const quantidadeCapitulos = 10;
 let taTocando = false;
@@ -17,20 +18,19 @@ function formatarTempo(segundos) {
   return `${horas.toString().padStart(2, "0")}:${minutos.toString().padStart(2, "0")}:${segundosFormatados.toString().padStart(2, "0")}`;
 }
 
-function atualizarTempoAtual() {
-  const tempoTotal = audio.duration;
-  const tempoAtualSegundos = audio.currentTime;
-  tempoAtual.innerText = formatarTempo(tempoAtualSegundos);
-  
-  const porcentagemProgresso = (tempoAtualSegundos / tempoTotal) * 100;
+function atualizarBarraProgresso() {
+  const porcentagemProgresso = (tempoSelecionado / duracaoTotal) * 100;
   barraProgresso.value = porcentagemProgresso;
 }
 
-function selecionarMinuto() {
+function atualizarTempoAtual() {
+  tempoAtual.innerText = formatarTempo(tempoSelecionado);
+}
+
+function selecionarTempo() {
   const porcentagemSelecionada = barraProgresso.value;
-  const tempoTotal = audio.duration;
-  const tempoSelecionado = (porcentagemSelecionada / 100) * tempoTotal;
-  audio.currentTime = tempoSelecionado;
+  tempoSelecionado = (porcentagemSelecionada / 100) * duracaoTotal;
+  atualizarTempoAtual();
 }
 
 
@@ -82,6 +82,10 @@ botaoPlayPause.addEventListener("click", tocarOuPausarFaixa);
 botaoCapituloAnterior.addEventListener("click", capituloAnterior);
 botaoProximoCapitulo.addEventListener("click", proximoCapitulo);
 audio.addEventListener("ended", proximoCapitulo);
-barraProgresso.addEventListener("input", selecionarMinuto);
+barraProgresso.addEventListener("input", selecionarTempo);
+
+tempoTotal.innerText = formatarTempo(duracaoTotal);
+atualizarBarraProgresso();
+atualizarTempoAtual();
 audio.addEventListener("timeupdate", atualizarTempoAtual);
 
