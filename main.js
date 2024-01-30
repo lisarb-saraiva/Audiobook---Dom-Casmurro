@@ -10,24 +10,29 @@ const quantidadeCapitulos = 10;
 let taTocando = false;
 let capitulo = 1;
 
+function formatarTempo(segundos) {
+  const horas = Math.floor(segundos / 3600);
+  const minutos = Math.floor((segundos % 3600) / 60);
+  const segundosFormatados = Math.floor(segundos % 60);
+  return `${horas.toString().padStart(2, "0")}:${minutos.toString().padStart(2, "0")}:${segundosFormatados.toString().padStart(2, "0")}`;
+}
+
 function atualizarTempoAtual() {
-  const horas = Math.floor(audio.currentTime / 3600);
-  const minutos = Math.floor((audio.currentTime % 3600) / 60);
-  const segundos = Math.floor(audio.currentTime % 60);
-  tempoAtual.innerText = horas.toString().padStart(2, "0") + ":" + minutos.toString().padStart(2, "0") + ":" + segundos.toString().padStart(2, "0");
+  const tempoTotal = audio.duration;
+  const tempoAtualSegundos = audio.currentTime;
+  tempoAtual.innerText = formatarTempo(tempoAtualSegundos);
   
-  const porcentagemProgresso = (audio.currentTime / audio.duration) * 100;
+  const porcentagemProgresso = (tempoAtualSegundos / tempoTotal) * 100;
   barraProgresso.value = porcentagemProgresso;
 }
 
-function selecionarMinuto(event) {
-  const larguraBarra = this.offsetWidth;
-  const clickX = event.offsetX;
-  const porcentagemSelecionada = (clickX / larguraBarra) * 100;
+function selecionarMinuto() {
+  const porcentagemSelecionada = barraProgresso.value;
   const tempoTotal = audio.duration;
   const tempoSelecionado = (porcentagemSelecionada / 100) * tempoTotal;
   audio.currentTime = tempoSelecionado;
 }
+
 
 function tocarFaixa() {
   botaoPlayPause.classList.remove("bi-play-circle-fill");
