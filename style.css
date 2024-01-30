@@ -67,8 +67,8 @@ button {
   width: 80%;
 }
 
-#tempo-atual {
-  margin-left: 10px;
+#tempo-atual, #tempo-total {
+  margin-left: 0 10px;
 }
 
 #capitulo {
