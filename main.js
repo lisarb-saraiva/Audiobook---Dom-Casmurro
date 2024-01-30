@@ -6,10 +6,30 @@ const botaoCapituloAnterior = document.getElementById("anterior");
 const tempoAtual = document.getElementById("tempo-atual");
 const barraProgresso = document.getElementById("barra-progresso");
 const tempoTotal = document.getElementById("tempo-total");
+const audio = new Audio("/books");
 
 const quantidadeCapitulos = 10;
 let taTocando = false;
 let capitulo = 1;
+
+audio.addEventListener("loadedmetadata", function() {
+  duracaoTotal = audio.duration;
+  tempoTotal.innerText = formatarTempo(duracaoTotal);
+  atualizarBarraProgresso();
+});
+
+audio.addEventListener("timeupdate", function() {
+  tempoSelecionado = audio.currentTime;
+  atualizarTempoAtual();
+  atualizarBarraProgresso();
+});
+
+barraProgresso.addEventListener("input", function() {
+  const porcentagemSelecionada = barraProgresso.value;
+  tempoSelecionado = (porcentagemSelecionada / 100) * duracaoTotal;
+  audio.currentTime = tempoSelecionado;
+  atualizarTempoAtual();
+});
 
 function formatarTempo(segundos) {
   const horas = Math.floor(segundos / 3600);
@@ -88,4 +108,7 @@ tempoTotal.innerText = formatarTempo(duracaoTotal);
 atualizarBarraProgresso();
 atualizarTempoAtual();
 audio.addEventListener("timeupdate", atualizarTempoAtual);
+audio.addEventListener("ended", function() {
+  // Ação a ser executada quando o áudio terminar de ser reproduzido
+});
 
