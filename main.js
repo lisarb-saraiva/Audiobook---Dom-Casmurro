@@ -8,7 +8,6 @@ const quantidadeCapitulos = 10;
 let taTocando = false;
 let capitulo = 1;
 
-
 function tocarFaixa() {
   botaoPlayPause.classList.remove("bi-play-circle-fill");
   botaoPlayPause.classList.add("bi-pause-circle-fill");
@@ -57,3 +56,4 @@ botaoPlayPause.addEventListener("click", tocarOuPausarFaixa);
 botaoCapituloAnterior.addEventListener("click", capituloAnterior);
 botaoProximoCapitulo.addEventListener("click", proximoCapitulo);
 audio.addEventListener("ended", proximoCapitulo);
+
