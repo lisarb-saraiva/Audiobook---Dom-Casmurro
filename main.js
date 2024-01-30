@@ -4,12 +4,30 @@ const botaoPlayPause = document.getElementById("play-pause");
 const botaoProximoCapitulo = document.getElementById("proximo");
 const botaoCapituloAnterior = document.getElementById("anterior");
 const tempoAtual = document.getElementById("tempo-atual");
-
+const barraTempo = document.getElementById("barra-tempo");
 
 const quantidadeCapitulos = 10;
 let taTocando = false;
 let capitulo = 1;
 
+function atualizarBarraTempo() {
+  const larguraBarra = barraTempo.offsetWidth;
+  const tempoTotal = audio.duration;
+  const tempoAtual = audio.currentTime;
+  const porcentagemProgresso = (tempoAtual / tempoTotal) * 100;
+  barraTempo.style.width = porcentagemProgresso + "%";
+}
+
+function selecionarTempo(event) {
+  const larguraBarra = barraTempo.offsetWidth;
+  const clickX = event.offsetX;
+  const tempoTotal = audio.duration;
+  const tempoSelecionado = (clickX / larguraBarra) * tempoTotal;
+  audio.currentTime = tempoSelecionado;
+}
+
+audio.addEventListener("timeupdate", atualizarBarraTempo);
+barraTempo.addEventListener("click", selecionarTempo);
 
 function atualizarTempoAtual() {
   const minutos = Math.floor(audio.currentTime / 60);
